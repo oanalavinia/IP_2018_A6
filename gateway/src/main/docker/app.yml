@@ -9,7 +9,7 @@ services:
             - SPRING_DATASOURCE_URL=jdbc:sqlserver://gateway-mssql:1433;database=jhitest
             - JHIPSTER_SLEEP=30 # gives time for the JHipster Registry to boot before the application
         ports:
-            - 8079:8079
+            - 8080:8080
     gateway-mssql:
         extends:
             file: mssql.yml
