@@ -1,7 +1,8 @@
 {
   "generator-jhipster": {
     "promptValues": {
-      "packageName": "com.gateway"
+      "packageName": "com.gateway",
+      "microservicePath": "../warehouse"
     },
     "jhipsterVersion": "4.14.4",
     "baseName": "gateway",

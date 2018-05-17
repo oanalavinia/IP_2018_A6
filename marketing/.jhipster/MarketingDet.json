@@ -1,0 +1,39 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "productCODE",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength",
+                "maxlength"
+            ],
+            "fieldValidateRulesMinlength": "6",
+            "fieldValidateRulesMaxlength": "6"
+        },
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20180517195238",
+    "dto": "mapstruct",
+    "service": "serviceImpl",
+    "entityTableName": "marketing_det",
+    "jpaMetamodelFiltering": false,
+    "pagination": "pagination",
+    "microserviceName": "marketing",
+    "searchEngine": false
+}

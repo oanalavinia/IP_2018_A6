@@ -1,0 +1,32 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "productCODE",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength",
+                "maxlength"
+            ],
+            "fieldValidateRulesMinlength": "6",
+            "fieldValidateRulesMaxlength": "6"
+        },
+        {
+            "fieldName": "stock",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20180517195818",
+    "dto": "mapstruct",
+    "service": "serviceImpl",
+    "entityTableName": "warehouse_det",
+    "jpaMetamodelFiltering": false,
+    "pagination": "pagination",
+    "microserviceName": "warehouse",
+    "searchEngine": false
+}
