@@ -13,10 +13,6 @@ public class MarketingDetDTO implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(min = 6, max = 6)
-    private String productCODE;
-
-    @NotNull
     private String name;
 
     @NotNull
@@ -28,14 +24,6 @@ public class MarketingDetDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getProductCODE() {
-        return productCODE;
-    }
-
-    public void setProductCODE(String productCODE) {
-        this.productCODE = productCODE;
     }
 
     public String getName() {
@@ -79,7 +67,6 @@ public class MarketingDetDTO implements Serializable {
     public String toString() {
         return "MarketingDetDTO{" +
             "id=" + getId() +
-            ", productCODE='" + getProductCODE() + "'" +
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
             "}";

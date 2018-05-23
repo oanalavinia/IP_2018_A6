@@ -17,16 +17,16 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span>ID</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="productCODE"><span>Product CODE</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="shipCost"><span>Ship Cost</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="productId"><span>Product Id</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let shippingDet of shippingDets ;trackBy: trackId">
                 <td><a [routerLink]="['../shipping-det', shippingDet.id ]">{{shippingDet.id}}</a></td>
-                <td>{{shippingDet.productCODE}}</td>
                 <td>{{shippingDet.shipCost}}</td>
+                <td>{{shippingDet.productId}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

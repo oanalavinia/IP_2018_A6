@@ -21,11 +21,11 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="product_code" type="varchar(6)">
+            <column name="stock" type="integer">
                 <constraints nullable="false" />
             </column>
 
-            <column name="stock" type="integer">
+            <column name="product_id" type="bigint">
                 <constraints nullable="false" />
             </column>
 

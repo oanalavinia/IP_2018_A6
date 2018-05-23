@@ -33,10 +33,10 @@ describe('WarehouseDet e2e test', () => {
 
     it('should create and save WarehouseDets', () => {
         warehouseDetComponentsPage.clickOnCreateButton();
-        warehouseDetDialogPage.setProductCODEInput('productCODE');
-        expect(warehouseDetDialogPage.getProductCODEInput()).toMatch('productCODE');
         warehouseDetDialogPage.setStockInput('5');
         expect(warehouseDetDialogPage.getStockInput()).toMatch('5');
+        warehouseDetDialogPage.setProductIdInput('5');
+        expect(warehouseDetDialogPage.getProductIdInput()).toMatch('5');
         warehouseDetDialogPage.save();
         expect(warehouseDetDialogPage.getSaveButton().isPresent()).toBeFalsy();
     });
@@ -63,20 +63,12 @@ export class WarehouseDetDialogPage {
     modalTitle = element(by.css('h4#myWarehouseDetLabel'));
     saveButton = element(by.css('.modal-footer .btn.btn-primary'));
     closeButton = element(by.css('button.close'));
-    productCODEInput = element(by.css('input#field_productCODE'));
     stockInput = element(by.css('input#field_stock'));
+    productIdInput = element(by.css('input#field_productId'));
 
     getModalTitle() {
         return this.modalTitle.getText();
     }
-
-    setProductCODEInput = function(productCODE) {
-        this.productCODEInput.sendKeys(productCODE);
-    };
-
-    getProductCODEInput = function() {
-        return this.productCODEInput.getAttribute('value');
-    };
 
     setStockInput = function(stock) {
         this.stockInput.sendKeys(stock);
@@ -84,6 +76,14 @@ export class WarehouseDetDialogPage {
 
     getStockInput = function() {
         return this.stockInput.getAttribute('value');
+    };
+
+    setProductIdInput = function(productId) {
+        this.productIdInput.sendKeys(productId);
+    };
+
+    getProductIdInput = function() {
+        return this.productIdInput.getAttribute('value');
     };
 
     save() {

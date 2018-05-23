@@ -13,11 +13,10 @@ public class SalesDetDTO implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(min = 6, max = 6)
-    private String productCODE;
+    private Double price;
 
     @NotNull
-    private Double price;
+    private Long productId;
 
     public Long getId() {
         return id;
@@ -27,20 +26,20 @@ public class SalesDetDTO implements Serializable {
         this.id = id;
     }
 
-    public String getProductCODE() {
-        return productCODE;
-    }
-
-    public void setProductCODE(String productCODE) {
-        this.productCODE = productCODE;
-    }
-
     public Double getPrice() {
         return price;
     }
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     @Override
@@ -68,8 +67,8 @@ public class SalesDetDTO implements Serializable {
     public String toString() {
         return "SalesDetDTO{" +
             "id=" + getId() +
-            ", productCODE='" + getProductCODE() + "'" +
             ", price=" + getPrice() +
+            ", productId=" + getProductId() +
             "}";
     }
 }

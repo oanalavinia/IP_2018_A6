@@ -41,11 +41,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = SalesApp.class)
 public class SalesDetResourceIntTest {
 
-    private static final String DEFAULT_PRODUCT_CODE = "AAAAAA";
-    private static final String UPDATED_PRODUCT_CODE = "BBBBBB";
-
     private static final Double DEFAULT_PRICE = 1D;
     private static final Double UPDATED_PRICE = 2D;
+
+    private static final Long DEFAULT_PRODUCT_ID = 1L;
+    private static final Long UPDATED_PRODUCT_ID = 2L;
 
     @Autowired
     private SalesDetRepository salesDetRepository;
@@ -91,8 +91,8 @@ public class SalesDetResourceIntTest {
      */
     public static SalesDet createEntity(EntityManager em) {
         SalesDet salesDet = new SalesDet()
-            .productCODE(DEFAULT_PRODUCT_CODE)
-            .price(DEFAULT_PRICE);
+            .price(DEFAULT_PRICE)
+            .productId(DEFAULT_PRODUCT_ID);
         return salesDet;
     }
 
@@ -117,8 +117,8 @@ public class SalesDetResourceIntTest {
         List<SalesDet> salesDetList = salesDetRepository.findAll();
         assertThat(salesDetList).hasSize(databaseSizeBeforeCreate + 1);
         SalesDet testSalesDet = salesDetList.get(salesDetList.size() - 1);
-        assertThat(testSalesDet.getProductCODE()).isEqualTo(DEFAULT_PRODUCT_CODE);
         assertThat(testSalesDet.getPrice()).isEqualTo(DEFAULT_PRICE);
+        assertThat(testSalesDet.getProductId()).isEqualTo(DEFAULT_PRODUCT_ID);
     }
 
     @Test
@@ -143,10 +143,10 @@ public class SalesDetResourceIntTest {
 
     @Test
     @Transactional
-    public void checkProductCODEIsRequired() throws Exception {
+    public void checkPriceIsRequired() throws Exception {
         int databaseSizeBeforeTest = salesDetRepository.findAll().size();
         // set the field null
-        salesDet.setProductCODE(null);
+        salesDet.setPrice(null);
 
         // Create the SalesDet, which fails.
         SalesDetDTO salesDetDTO = salesDetMapper.toDto(salesDet);
@@ -162,10 +162,10 @@ public class SalesDetResourceIntTest {
 
     @Test
     @Transactional
-    public void checkPriceIsRequired() throws Exception {
+    public void checkProductIdIsRequired() throws Exception {
         int databaseSizeBeforeTest = salesDetRepository.findAll().size();
         // set the field null
-        salesDet.setPrice(null);
+        salesDet.setProductId(null);
 
         // Create the SalesDet, which fails.
         SalesDetDTO salesDetDTO = salesDetMapper.toDto(salesDet);
@@ -190,8 +190,8 @@ public class SalesDetResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(salesDet.getId().intValue())))
-            .andExpect(jsonPath("$.[*].productCODE").value(hasItem(DEFAULT_PRODUCT_CODE.toString())))
-            .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())));
+            .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())))
+            .andExpect(jsonPath("$.[*].productId").value(hasItem(DEFAULT_PRODUCT_ID.intValue())));
     }
 
     @Test
@@ -205,8 +205,8 @@ public class SalesDetResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(salesDet.getId().intValue()))
-            .andExpect(jsonPath("$.productCODE").value(DEFAULT_PRODUCT_CODE.toString()))
-            .andExpect(jsonPath("$.price").value(DEFAULT_PRICE.doubleValue()));
+            .andExpect(jsonPath("$.price").value(DEFAULT_PRICE.doubleValue()))
+            .andExpect(jsonPath("$.productId").value(DEFAULT_PRODUCT_ID.intValue()));
     }
 
     @Test
@@ -229,8 +229,8 @@ public class SalesDetResourceIntTest {
         // Disconnect from session so that the updates on updatedSalesDet are not directly saved in db
         em.detach(updatedSalesDet);
         updatedSalesDet
-            .productCODE(UPDATED_PRODUCT_CODE)
-            .price(UPDATED_PRICE);
+            .price(UPDATED_PRICE)
+            .productId(UPDATED_PRODUCT_ID);
         SalesDetDTO salesDetDTO = salesDetMapper.toDto(updatedSalesDet);
 
         restSalesDetMockMvc.perform(put("/api/sales-dets")
@@ -242,8 +242,8 @@ public class SalesDetResourceIntTest {
         List<SalesDet> salesDetList = salesDetRepository.findAll();
         assertThat(salesDetList).hasSize(databaseSizeBeforeUpdate);
         SalesDet testSalesDet = salesDetList.get(salesDetList.size() - 1);
-        assertThat(testSalesDet.getProductCODE()).isEqualTo(UPDATED_PRODUCT_CODE);
         assertThat(testSalesDet.getPrice()).isEqualTo(UPDATED_PRICE);
+        assertThat(testSalesDet.getProductId()).isEqualTo(UPDATED_PRODUCT_ID);
     }
 
     @Test

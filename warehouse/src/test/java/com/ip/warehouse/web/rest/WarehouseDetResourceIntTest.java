@@ -41,11 +41,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = WarehouseApp.class)
 public class WarehouseDetResourceIntTest {
 
-    private static final String DEFAULT_PRODUCT_CODE = "AAAAAA";
-    private static final String UPDATED_PRODUCT_CODE = "BBBBBB";
-
     private static final Integer DEFAULT_STOCK = 1;
     private static final Integer UPDATED_STOCK = 2;
+
+    private static final Long DEFAULT_PRODUCT_ID = 1L;
+    private static final Long UPDATED_PRODUCT_ID = 2L;
 
     @Autowired
     private WarehouseDetRepository warehouseDetRepository;
@@ -91,8 +91,8 @@ public class WarehouseDetResourceIntTest {
      */
     public static WarehouseDet createEntity(EntityManager em) {
         WarehouseDet warehouseDet = new WarehouseDet()
-            .productCODE(DEFAULT_PRODUCT_CODE)
-            .stock(DEFAULT_STOCK);
+            .stock(DEFAULT_STOCK)
+            .productId(DEFAULT_PRODUCT_ID);
         return warehouseDet;
     }
 
@@ -117,8 +117,8 @@ public class WarehouseDetResourceIntTest {
         List<WarehouseDet> warehouseDetList = warehouseDetRepository.findAll();
         assertThat(warehouseDetList).hasSize(databaseSizeBeforeCreate + 1);
         WarehouseDet testWarehouseDet = warehouseDetList.get(warehouseDetList.size() - 1);
-        assertThat(testWarehouseDet.getProductCODE()).isEqualTo(DEFAULT_PRODUCT_CODE);
         assertThat(testWarehouseDet.getStock()).isEqualTo(DEFAULT_STOCK);
+        assertThat(testWarehouseDet.getProductId()).isEqualTo(DEFAULT_PRODUCT_ID);
     }
 
     @Test
@@ -143,10 +143,10 @@ public class WarehouseDetResourceIntTest {
 
     @Test
     @Transactional
-    public void checkProductCODEIsRequired() throws Exception {
+    public void checkStockIsRequired() throws Exception {
         int databaseSizeBeforeTest = warehouseDetRepository.findAll().size();
         // set the field null
-        warehouseDet.setProductCODE(null);
+        warehouseDet.setStock(null);
 
         // Create the WarehouseDet, which fails.
         WarehouseDetDTO warehouseDetDTO = warehouseDetMapper.toDto(warehouseDet);
@@ -162,10 +162,10 @@ public class WarehouseDetResourceIntTest {
 
     @Test
     @Transactional
-    public void checkStockIsRequired() throws Exception {
+    public void checkProductIdIsRequired() throws Exception {
         int databaseSizeBeforeTest = warehouseDetRepository.findAll().size();
         // set the field null
-        warehouseDet.setStock(null);
+        warehouseDet.setProductId(null);
 
         // Create the WarehouseDet, which fails.
         WarehouseDetDTO warehouseDetDTO = warehouseDetMapper.toDto(warehouseDet);
@@ -190,8 +190,8 @@ public class WarehouseDetResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(warehouseDet.getId().intValue())))
-            .andExpect(jsonPath("$.[*].productCODE").value(hasItem(DEFAULT_PRODUCT_CODE.toString())))
-            .andExpect(jsonPath("$.[*].stock").value(hasItem(DEFAULT_STOCK)));
+            .andExpect(jsonPath("$.[*].stock").value(hasItem(DEFAULT_STOCK)))
+            .andExpect(jsonPath("$.[*].productId").value(hasItem(DEFAULT_PRODUCT_ID.intValue())));
     }
 
     @Test
@@ -205,8 +205,8 @@ public class WarehouseDetResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(warehouseDet.getId().intValue()))
-            .andExpect(jsonPath("$.productCODE").value(DEFAULT_PRODUCT_CODE.toString()))
-            .andExpect(jsonPath("$.stock").value(DEFAULT_STOCK));
+            .andExpect(jsonPath("$.stock").value(DEFAULT_STOCK))
+            .andExpect(jsonPath("$.productId").value(DEFAULT_PRODUCT_ID.intValue()));
     }
 
     @Test
@@ -229,8 +229,8 @@ public class WarehouseDetResourceIntTest {
         // Disconnect from session so that the updates on updatedWarehouseDet are not directly saved in db
         em.detach(updatedWarehouseDet);
         updatedWarehouseDet
-            .productCODE(UPDATED_PRODUCT_CODE)
-            .stock(UPDATED_STOCK);
+            .stock(UPDATED_STOCK)
+            .productId(UPDATED_PRODUCT_ID);
         WarehouseDetDTO warehouseDetDTO = warehouseDetMapper.toDto(updatedWarehouseDet);
 
         restWarehouseDetMockMvc.perform(put("/api/warehouse-dets")
@@ -242,8 +242,8 @@ public class WarehouseDetResourceIntTest {
         List<WarehouseDet> warehouseDetList = warehouseDetRepository.findAll();
         assertThat(warehouseDetList).hasSize(databaseSizeBeforeUpdate);
         WarehouseDet testWarehouseDet = warehouseDetList.get(warehouseDetList.size() - 1);
-        assertThat(testWarehouseDet.getProductCODE()).isEqualTo(UPDATED_PRODUCT_CODE);
         assertThat(testWarehouseDet.getStock()).isEqualTo(UPDATED_STOCK);
+        assertThat(testWarehouseDet.getProductId()).isEqualTo(UPDATED_PRODUCT_ID);
     }
 
     @Test

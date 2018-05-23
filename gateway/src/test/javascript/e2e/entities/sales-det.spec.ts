@@ -33,10 +33,10 @@ describe('SalesDet e2e test', () => {
 
     it('should create and save SalesDets', () => {
         salesDetComponentsPage.clickOnCreateButton();
-        salesDetDialogPage.setProductCODEInput('productCODE');
-        expect(salesDetDialogPage.getProductCODEInput()).toMatch('productCODE');
         salesDetDialogPage.setPriceInput('5');
         expect(salesDetDialogPage.getPriceInput()).toMatch('5');
+        salesDetDialogPage.setProductIdInput('5');
+        expect(salesDetDialogPage.getProductIdInput()).toMatch('5');
         salesDetDialogPage.save();
         expect(salesDetDialogPage.getSaveButton().isPresent()).toBeFalsy();
     });
@@ -63,20 +63,12 @@ export class SalesDetDialogPage {
     modalTitle = element(by.css('h4#mySalesDetLabel'));
     saveButton = element(by.css('.modal-footer .btn.btn-primary'));
     closeButton = element(by.css('button.close'));
-    productCODEInput = element(by.css('input#field_productCODE'));
     priceInput = element(by.css('input#field_price'));
+    productIdInput = element(by.css('input#field_productId'));
 
     getModalTitle() {
         return this.modalTitle.getText();
     }
-
-    setProductCODEInput = function(productCODE) {
-        this.productCODEInput.sendKeys(productCODE);
-    };
-
-    getProductCODEInput = function() {
-        return this.productCODEInput.getAttribute('value');
-    };
 
     setPriceInput = function(price) {
         this.priceInput.sendKeys(price);
@@ -84,6 +76,14 @@ export class SalesDetDialogPage {
 
     getPriceInput = function() {
         return this.priceInput.getAttribute('value');
+    };
+
+    setProductIdInput = function(productId) {
+        this.productIdInput.sendKeys(productId);
+    };
+
+    getProductIdInput = function() {
+        return this.productIdInput.getAttribute('value');
     };
 
     save() {

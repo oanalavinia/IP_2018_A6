@@ -33,10 +33,10 @@ describe('ShippingDet e2e test', () => {
 
     it('should create and save ShippingDets', () => {
         shippingDetComponentsPage.clickOnCreateButton();
-        shippingDetDialogPage.setProductCODEInput('productCODE');
-        expect(shippingDetDialogPage.getProductCODEInput()).toMatch('productCODE');
         shippingDetDialogPage.setShipCostInput('5');
         expect(shippingDetDialogPage.getShipCostInput()).toMatch('5');
+        shippingDetDialogPage.setProductIdInput('5');
+        expect(shippingDetDialogPage.getProductIdInput()).toMatch('5');
         shippingDetDialogPage.save();
         expect(shippingDetDialogPage.getSaveButton().isPresent()).toBeFalsy();
     });
@@ -63,20 +63,12 @@ export class ShippingDetDialogPage {
     modalTitle = element(by.css('h4#myShippingDetLabel'));
     saveButton = element(by.css('.modal-footer .btn.btn-primary'));
     closeButton = element(by.css('button.close'));
-    productCODEInput = element(by.css('input#field_productCODE'));
     shipCostInput = element(by.css('input#field_shipCost'));
+    productIdInput = element(by.css('input#field_productId'));
 
     getModalTitle() {
         return this.modalTitle.getText();
     }
-
-    setProductCODEInput = function(productCODE) {
-        this.productCODEInput.sendKeys(productCODE);
-    };
-
-    getProductCODEInput = function() {
-        return this.productCODEInput.getAttribute('value');
-    };
 
     setShipCostInput = function(shipCost) {
         this.shipCostInput.sendKeys(shipCost);
@@ -84,6 +76,14 @@ export class ShippingDetDialogPage {
 
     getShipCostInput = function() {
         return this.shipCostInput.getAttribute('value');
+    };
+
+    setProductIdInput = function(productId) {
+        this.productIdInput.sendKeys(productId);
+    };
+
+    getProductIdInput = function() {
+        return this.productIdInput.getAttribute('value');
     };
 
     save() {

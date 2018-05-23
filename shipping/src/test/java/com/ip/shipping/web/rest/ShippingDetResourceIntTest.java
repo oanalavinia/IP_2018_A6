@@ -41,11 +41,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = ShippingApp.class)
 public class ShippingDetResourceIntTest {
 
-    private static final String DEFAULT_PRODUCT_CODE = "AAAAAA";
-    private static final String UPDATED_PRODUCT_CODE = "BBBBBB";
-
     private static final Double DEFAULT_SHIP_COST = 1D;
     private static final Double UPDATED_SHIP_COST = 2D;
+
+    private static final Long DEFAULT_PRODUCT_ID = 1L;
+    private static final Long UPDATED_PRODUCT_ID = 2L;
 
     @Autowired
     private ShippingDetRepository shippingDetRepository;
@@ -91,8 +91,8 @@ public class ShippingDetResourceIntTest {
      */
     public static ShippingDet createEntity(EntityManager em) {
         ShippingDet shippingDet = new ShippingDet()
-            .productCODE(DEFAULT_PRODUCT_CODE)
-            .shipCost(DEFAULT_SHIP_COST);
+            .shipCost(DEFAULT_SHIP_COST)
+            .productId(DEFAULT_PRODUCT_ID);
         return shippingDet;
     }
 
@@ -117,8 +117,8 @@ public class ShippingDetResourceIntTest {
         List<ShippingDet> shippingDetList = shippingDetRepository.findAll();
         assertThat(shippingDetList).hasSize(databaseSizeBeforeCreate + 1);
         ShippingDet testShippingDet = shippingDetList.get(shippingDetList.size() - 1);
-        assertThat(testShippingDet.getProductCODE()).isEqualTo(DEFAULT_PRODUCT_CODE);
         assertThat(testShippingDet.getShipCost()).isEqualTo(DEFAULT_SHIP_COST);
+        assertThat(testShippingDet.getProductId()).isEqualTo(DEFAULT_PRODUCT_ID);
     }
 
     @Test
@@ -143,10 +143,10 @@ public class ShippingDetResourceIntTest {
 
     @Test
     @Transactional
-    public void checkProductCODEIsRequired() throws Exception {
+    public void checkShipCostIsRequired() throws Exception {
         int databaseSizeBeforeTest = shippingDetRepository.findAll().size();
         // set the field null
-        shippingDet.setProductCODE(null);
+        shippingDet.setShipCost(null);
 
         // Create the ShippingDet, which fails.
         ShippingDetDTO shippingDetDTO = shippingDetMapper.toDto(shippingDet);
@@ -162,10 +162,10 @@ public class ShippingDetResourceIntTest {
 
     @Test
     @Transactional
-    public void checkShipCostIsRequired() throws Exception {
+    public void checkProductIdIsRequired() throws Exception {
         int databaseSizeBeforeTest = shippingDetRepository.findAll().size();
         // set the field null
-        shippingDet.setShipCost(null);
+        shippingDet.setProductId(null);
 
         // Create the ShippingDet, which fails.
         ShippingDetDTO shippingDetDTO = shippingDetMapper.toDto(shippingDet);
@@ -190,8 +190,8 @@ public class ShippingDetResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(shippingDet.getId().intValue())))
-            .andExpect(jsonPath("$.[*].productCODE").value(hasItem(DEFAULT_PRODUCT_CODE.toString())))
-            .andExpect(jsonPath("$.[*].shipCost").value(hasItem(DEFAULT_SHIP_COST.doubleValue())));
+            .andExpect(jsonPath("$.[*].shipCost").value(hasItem(DEFAULT_SHIP_COST.doubleValue())))
+            .andExpect(jsonPath("$.[*].productId").value(hasItem(DEFAULT_PRODUCT_ID.intValue())));
     }
 
     @Test
@@ -205,8 +205,8 @@ public class ShippingDetResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(shippingDet.getId().intValue()))
-            .andExpect(jsonPath("$.productCODE").value(DEFAULT_PRODUCT_CODE.toString()))
-            .andExpect(jsonPath("$.shipCost").value(DEFAULT_SHIP_COST.doubleValue()));
+            .andExpect(jsonPath("$.shipCost").value(DEFAULT_SHIP_COST.doubleValue()))
+            .andExpect(jsonPath("$.productId").value(DEFAULT_PRODUCT_ID.intValue()));
     }
 
     @Test
@@ -229,8 +229,8 @@ public class ShippingDetResourceIntTest {
         // Disconnect from session so that the updates on updatedShippingDet are not directly saved in db
         em.detach(updatedShippingDet);
         updatedShippingDet
-            .productCODE(UPDATED_PRODUCT_CODE)
-            .shipCost(UPDATED_SHIP_COST);
+            .shipCost(UPDATED_SHIP_COST)
+            .productId(UPDATED_PRODUCT_ID);
         ShippingDetDTO shippingDetDTO = shippingDetMapper.toDto(updatedShippingDet);
 
         restShippingDetMockMvc.perform(put("/api/shipping-dets")
@@ -242,8 +242,8 @@ public class ShippingDetResourceIntTest {
         List<ShippingDet> shippingDetList = shippingDetRepository.findAll();
         assertThat(shippingDetList).hasSize(databaseSizeBeforeUpdate);
         ShippingDet testShippingDet = shippingDetList.get(shippingDetList.size() - 1);
-        assertThat(testShippingDet.getProductCODE()).isEqualTo(UPDATED_PRODUCT_CODE);
         assertThat(testShippingDet.getShipCost()).isEqualTo(UPDATED_SHIP_COST);
+        assertThat(testShippingDet.getProductId()).isEqualTo(UPDATED_PRODUCT_ID);
     }
 
     @Test

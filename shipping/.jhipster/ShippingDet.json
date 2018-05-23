@@ -3,19 +3,15 @@
     "relationships": [],
     "fields": [
         {
-            "fieldName": "productCODE",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required",
-                "minlength",
-                "maxlength"
-            ],
-            "fieldValidateRulesMinlength": "6",
-            "fieldValidateRulesMaxlength": "6"
-        },
-        {
             "fieldName": "shipCost",
             "fieldType": "Double",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "productId",
+            "fieldType": "Long",
             "fieldValidateRules": [
                 "required"
             ]

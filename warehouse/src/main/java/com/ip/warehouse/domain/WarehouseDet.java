@@ -22,13 +22,12 @@ public class WarehouseDet implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(min = 6, max = 6)
-    @Column(name = "product_code", length = 6, nullable = false)
-    private String productCODE;
-
-    @NotNull
     @Column(name = "stock", nullable = false)
     private Integer stock;
+
+    @NotNull
+    @Column(name = "product_id", nullable = false)
+    private Long productId;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -37,19 +36,6 @@ public class WarehouseDet implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getProductCODE() {
-        return productCODE;
-    }
-
-    public WarehouseDet productCODE(String productCODE) {
-        this.productCODE = productCODE;
-        return this;
-    }
-
-    public void setProductCODE(String productCODE) {
-        this.productCODE = productCODE;
     }
 
     public Integer getStock() {
@@ -63,6 +49,19 @@ public class WarehouseDet implements Serializable {
 
     public void setStock(Integer stock) {
         this.stock = stock;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public WarehouseDet productId(Long productId) {
+        this.productId = productId;
+        return this;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -90,8 +89,8 @@ public class WarehouseDet implements Serializable {
     public String toString() {
         return "WarehouseDet{" +
             "id=" + getId() +
-            ", productCODE='" + getProductCODE() + "'" +
             ", stock=" + getStock() +
+            ", productId=" + getProductId() +
             "}";
     }
 }

@@ -17,7 +17,6 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span>ID</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="productCODE"><span>Product CODE</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="name"><span>Name</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="description"><span>Description</span> <span class="fa fa-sort"></span></th>
             <th></th>
@@ -26,7 +25,6 @@
             <tbody>
             <tr *ngFor="let marketingDet of marketingDets ;trackBy: trackId">
                 <td><a [routerLink]="['../marketing-det', marketingDet.id ]">{{marketingDet.id}}</a></td>
-                <td>{{marketingDet.productCODE}}</td>
                 <td>{{marketingDet.name}}</td>
                 <td>{{marketingDet.description}}</td>
                 <td class="text-right">

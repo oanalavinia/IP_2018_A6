@@ -33,8 +33,6 @@ describe('MarketingDet e2e test', () => {
 
     it('should create and save MarketingDets', () => {
         marketingDetComponentsPage.clickOnCreateButton();
-        marketingDetDialogPage.setProductCODEInput('productCODE');
-        expect(marketingDetDialogPage.getProductCODEInput()).toMatch('productCODE');
         marketingDetDialogPage.setNameInput('name');
         expect(marketingDetDialogPage.getNameInput()).toMatch('name');
         marketingDetDialogPage.setDescriptionInput('description');
@@ -65,21 +63,12 @@ export class MarketingDetDialogPage {
     modalTitle = element(by.css('h4#myMarketingDetLabel'));
     saveButton = element(by.css('.modal-footer .btn.btn-primary'));
     closeButton = element(by.css('button.close'));
-    productCODEInput = element(by.css('input#field_productCODE'));
     nameInput = element(by.css('input#field_name'));
     descriptionInput = element(by.css('input#field_description'));
 
     getModalTitle() {
         return this.modalTitle.getText();
     }
-
-    setProductCODEInput = function(productCODE) {
-        this.productCODEInput.sendKeys(productCODE);
-    };
-
-    getProductCODEInput = function() {
-        return this.productCODEInput.getAttribute('value');
-    };
 
     setNameInput = function(name) {
         this.nameInput.sendKeys(name);

@@ -41,9 +41,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = MarketingApp.class)
 public class MarketingDetResourceIntTest {
 
-    private static final String DEFAULT_PRODUCT_CODE = "AAAAAA";
-    private static final String UPDATED_PRODUCT_CODE = "BBBBBB";
-
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
@@ -94,7 +91,6 @@ public class MarketingDetResourceIntTest {
      */
     public static MarketingDet createEntity(EntityManager em) {
         MarketingDet marketingDet = new MarketingDet()
-            .productCODE(DEFAULT_PRODUCT_CODE)
             .name(DEFAULT_NAME)
             .description(DEFAULT_DESCRIPTION);
         return marketingDet;
@@ -121,7 +117,6 @@ public class MarketingDetResourceIntTest {
         List<MarketingDet> marketingDetList = marketingDetRepository.findAll();
         assertThat(marketingDetList).hasSize(databaseSizeBeforeCreate + 1);
         MarketingDet testMarketingDet = marketingDetList.get(marketingDetList.size() - 1);
-        assertThat(testMarketingDet.getProductCODE()).isEqualTo(DEFAULT_PRODUCT_CODE);
         assertThat(testMarketingDet.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testMarketingDet.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
     }
@@ -144,25 +139,6 @@ public class MarketingDetResourceIntTest {
         // Validate the MarketingDet in the database
         List<MarketingDet> marketingDetList = marketingDetRepository.findAll();
         assertThat(marketingDetList).hasSize(databaseSizeBeforeCreate);
-    }
-
-    @Test
-    @Transactional
-    public void checkProductCODEIsRequired() throws Exception {
-        int databaseSizeBeforeTest = marketingDetRepository.findAll().size();
-        // set the field null
-        marketingDet.setProductCODE(null);
-
-        // Create the MarketingDet, which fails.
-        MarketingDetDTO marketingDetDTO = marketingDetMapper.toDto(marketingDet);
-
-        restMarketingDetMockMvc.perform(post("/api/marketing-dets")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(marketingDetDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<MarketingDet> marketingDetList = marketingDetRepository.findAll();
-        assertThat(marketingDetList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -214,7 +190,6 @@ public class MarketingDetResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(marketingDet.getId().intValue())))
-            .andExpect(jsonPath("$.[*].productCODE").value(hasItem(DEFAULT_PRODUCT_CODE.toString())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
     }
@@ -230,7 +205,6 @@ public class MarketingDetResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(marketingDet.getId().intValue()))
-            .andExpect(jsonPath("$.productCODE").value(DEFAULT_PRODUCT_CODE.toString()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
     }
@@ -255,7 +229,6 @@ public class MarketingDetResourceIntTest {
         // Disconnect from session so that the updates on updatedMarketingDet are not directly saved in db
         em.detach(updatedMarketingDet);
         updatedMarketingDet
-            .productCODE(UPDATED_PRODUCT_CODE)
             .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION);
         MarketingDetDTO marketingDetDTO = marketingDetMapper.toDto(updatedMarketingDet);
@@ -269,7 +242,6 @@ public class MarketingDetResourceIntTest {
         List<MarketingDet> marketingDetList = marketingDetRepository.findAll();
         assertThat(marketingDetList).hasSize(databaseSizeBeforeUpdate);
         MarketingDet testMarketingDet = marketingDetList.get(marketingDetList.size() - 1);
-        assertThat(testMarketingDet.getProductCODE()).isEqualTo(UPDATED_PRODUCT_CODE);
         assertThat(testMarketingDet.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testMarketingDet.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
     }

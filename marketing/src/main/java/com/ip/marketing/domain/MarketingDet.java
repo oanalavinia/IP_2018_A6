@@ -22,11 +22,6 @@ public class MarketingDet implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(min = 6, max = 6)
-    @Column(name = "product_code", length = 6, nullable = false)
-    private String productCODE;
-
-    @NotNull
     @Column(name = "name", nullable = false)
     private String name;
 
@@ -41,19 +36,6 @@ public class MarketingDet implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getProductCODE() {
-        return productCODE;
-    }
-
-    public MarketingDet productCODE(String productCODE) {
-        this.productCODE = productCODE;
-        return this;
-    }
-
-    public void setProductCODE(String productCODE) {
-        this.productCODE = productCODE;
     }
 
     public String getName() {
@@ -107,7 +89,6 @@ public class MarketingDet implements Serializable {
     public String toString() {
         return "MarketingDet{" +
             "id=" + getId() +
-            ", productCODE='" + getProductCODE() + "'" +
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
             "}";

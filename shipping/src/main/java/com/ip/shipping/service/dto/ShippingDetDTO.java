@@ -13,11 +13,10 @@ public class ShippingDetDTO implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(min = 6, max = 6)
-    private String productCODE;
+    private Double shipCost;
 
     @NotNull
-    private Double shipCost;
+    private Long productId;
 
     public Long getId() {
         return id;
@@ -27,20 +26,20 @@ public class ShippingDetDTO implements Serializable {
         this.id = id;
     }
 
-    public String getProductCODE() {
-        return productCODE;
-    }
-
-    public void setProductCODE(String productCODE) {
-        this.productCODE = productCODE;
-    }
-
     public Double getShipCost() {
         return shipCost;
     }
 
     public void setShipCost(Double shipCost) {
         this.shipCost = shipCost;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     @Override
@@ -68,8 +67,8 @@ public class ShippingDetDTO implements Serializable {
     public String toString() {
         return "ShippingDetDTO{" +
             "id=" + getId() +
-            ", productCODE='" + getProductCODE() + "'" +
             ", shipCost=" + getShipCost() +
+            ", productId=" + getProductId() +
             "}";
     }
 }
