@@ -5,7 +5,7 @@ import { SERVER_API_URL } from '../../app.constants';
 
 import { MarketingDet } from './marketing-det.model';
 import { createRequestOption } from '../../shared';
-
+ 
 export type EntityResponseType = HttpResponse<MarketingDet>;
 
 @Injectable()
